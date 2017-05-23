@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# sleep 5
+UUID=`python3 -c 'import sys,uuid; sys.stdout.write(uuid.uuid4().hex)'`
+FILENAME=/youtube/${UUID}.mp3
+echo `date` > $FILENAME
+echo $FILENAME

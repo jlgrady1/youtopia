@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.utils.encoding import smart_str
 from django.views.static import serve
+from wsgiref.util import FileWrapper
 
 from mp3.forms import YouTubeURLForm
 from mp3.youtube import YouTubeDownloader
@@ -29,10 +30,17 @@ def index(request):
             LOGGER.debug("is_valid")
             ydl = YouTubeDownloader(url)
             filename, filepath = ydl.fetch()
+            static_path = '/youtube/{}'.format(filename)
 
-            response = HttpResponse(content_type='application/force-download')
-            response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(filename)
-            response['X-Sendfile'] = smart_str(filepath)
+            response = HttpResponseRedirect(static_path, content_type='application/force-download')
+            # response['Content-Description'] = 'File Transfer'
+            # response['Content-Disposition'] = 'attachment; filename={}'.format(smart_str(filename))
+            # response['Content-Transfer-Encoding'] = 'binary'
+            # response['Expires'] = '0'
+            # # response['Content-Length'] = ''
+            # response['Cache-Control'] = 'must-revalidate, post-check=0, pre-check='
+            # response[''] = ''
+
 
             # It's usually a good idea to set the 'Content-Length' header too.
             # You can also set any other required headers: Cache-Control, etc.

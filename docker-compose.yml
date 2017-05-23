@@ -1,0 +1,28 @@
+version: '3'
+services:
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+     - 8000:8000
+    volumes:
+     - .:/srv/youtopia
+     - static:/static
+     - youtube:/youtube
+
+  nginx:
+    build:
+      context: docker
+      dockerfile: nginx.Dockerfile
+    links:
+      - django
+    ports:
+      - 8081:80
+    volumes:
+      - static:/static
+      - youtube:/youtube
+
+volumes:
+  static:
+  youtube:
