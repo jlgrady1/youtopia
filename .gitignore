@@ -102,3 +102,6 @@ ENV/
 
 # Mac Stuff
 .DS_Store
+
+# DBs
+*.sqlite3
