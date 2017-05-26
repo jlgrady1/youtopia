@@ -2,9 +2,12 @@ FROM alpine:3.4
 MAINTAINER James Grady <jlgrady1@gmail.com>
 
 ENV FFMPEG_VERSION=3.3.1 \
-    FFMPEG_TMP=/tmp/ffmpeg
+    FFMPEG_TMP=/tmp/ffmpeg \
+    DEBUG=False \
+    YOUTOPIA_HOME=/srv/youtopia \
+    MEDIA_HOME=/youtube
 
-WORKDIR /srv/youtopia
+WORKDIR ${YOUTOPIA_HOME}
 
 RUN apk add --update curl python3 tar xz && \
     ln -s /usr/bin/python3 /usr/local/bin/python && \
@@ -16,10 +19,8 @@ RUN apk add --update curl python3 tar xz && \
     cd / && rm -rf /tmp/ffmpeg
 
 COPY / ./
-COPY fake_serve /usr/local/bin
-RUN pip install -r requirements.txt && \
-    python manage.py  collectstatic --no-input
+RUN pip install -r requirements.txt
 
 EXPOSE 80
 
-CMD start.sh
+CMD  ${YOUTOPIA_HOME}/start.sh

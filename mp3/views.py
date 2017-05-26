@@ -31,21 +31,10 @@ def index(request):
             url = f['youtube_url']
             LOGGER.debug("is_valid: {}".format(url))
             ydl = YouTubeDownloader(url)
-            filename, filepath = ydl.fetch()
+            filename = ydl.fetch()
             static_path = '/youtube/{}'.format(filename)
 
             response = HttpResponseRedirect(static_path, content_type='application/force-download')
-            # response['Content-Description'] = 'File Transfer'
-            # response['Content-Disposition'] = 'attachment; filename={}'.format(smart_str(filename))
-            # response['Content-Transfer-Encoding'] = 'binary'
-            # response['Expires'] = '0'
-            # # response['Content-Length'] = ''
-            # response['Cache-Control'] = 'must-revalidate, post-check=0, pre-check='
-            # response[''] = ''
-
-
-            # It's usually a good idea to set the 'Content-Length' header too.
-            # You can also set any other required headers: Cache-Control, etc.
             return response
         else:
             LOGGER.debug("Invalid form")

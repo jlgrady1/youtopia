@@ -23,6 +23,15 @@ services:
       - static:/static
       - youtube:/youtube
 
+  reaper:
+    build:
+      context: docker
+      dockerfile: reaper.Dockerfile
+    environment:
+      - DEBUG=True
+    volumes:
+      - youtube:/youtube
+
 volumes:
   static:
   youtube:
