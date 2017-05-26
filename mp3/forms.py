@@ -20,7 +20,7 @@ class YouTubeURLForm(forms.Form):
 
     def clean_youtube_url(self):
         url = self.data['youtube_url']
-        LOGGER.debug("cleaned data", url)
         # https://www.youtube.com/watch?v=<videoid>
         if 'youtube.com/watch?v=' not in url:
             raise forms.ValidationError("Unknown youtube url.")
+        return url

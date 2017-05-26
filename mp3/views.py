@@ -23,11 +23,13 @@ def index(request):
         LOGGER.debug("Submitted")
         # create a form instance and populate it with data from the request:
         form = YouTubeURLForm(request.POST)
+        LOGGER.debug("Submitted form {}".format(form))
         # check whether it's valid:
         if form.is_valid():
             f = form.cleaned_data
+            LOGGER.debug("form {}".format(f))
             url = f['youtube_url']
-            LOGGER.debug("is_valid")
+            LOGGER.debug("is_valid: {}".format(url))
             ydl = YouTubeDownloader(url)
             filename, filepath = ydl.fetch()
             static_path = '/youtube/{}'.format(filename)

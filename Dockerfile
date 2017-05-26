@@ -17,8 +17,9 @@ RUN apk add --update curl python3 tar xz && \
 
 COPY / ./
 COPY fake_serve /usr/local/bin
-RUN pip3 install -r requirements.txt
+RUN pip install -r requirements.txt && \
+    python manage.py  collectstatic --no-input
 
 EXPOSE 80
 
-CMD python manage.py runserver 0.0.0.0:8000
+CMD start.sh
