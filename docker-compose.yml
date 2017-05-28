@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
     ports:
      - 8000:8000
+    restart: always
     volumes:
      - .:/srv/youtopia
      - static:/static
@@ -19,6 +20,7 @@ services:
       - django
     ports:
       - 8081:80
+    restart: always
     volumes:
       - static:/static
       - youtube:/youtube
@@ -29,6 +31,7 @@ services:
       dockerfile: reaper.Dockerfile
     environment:
       - DEBUG=True
+    restart: always
     volumes:
       - youtube:/youtube
 
